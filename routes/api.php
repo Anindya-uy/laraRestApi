@@ -25,5 +25,5 @@ Route::post('/login', [RegisterController::class, 'login']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     //ProductController
-    Route::resource('/products', ProductController::class);
+    Route::resource('products', ProductController::class);
 });

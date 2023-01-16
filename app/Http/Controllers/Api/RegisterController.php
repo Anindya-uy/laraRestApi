@@ -40,7 +40,30 @@ class RegisterController extends BaseController
 
     }
 
-    
+    public function login(Request $request){
+       
+        $validator = Validator::make($request->all(), [
+
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:8',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error', $validator->errors());
+        }
+
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $user = Auth::user();
+            $success['token'] = $user->createToken('loginApi')->plainTextToken;
+            $success['name'] = $user->name;
+
+            return $this->sendResponse($success, 'User logged in Successfully!');
+        }else{
+            return $this->sendError('Unothorized', ['error' => 'Unothorized!']);
+        }
+
+
+    }
 
 
 }
