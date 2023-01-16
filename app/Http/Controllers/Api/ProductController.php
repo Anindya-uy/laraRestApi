@@ -49,10 +49,7 @@ class ProductController extends BaseController
     }
     public function destroy(Product $product){
         
-        if(is_null($product)){
-            $product->delete();
-            return $this->sendError('Product Already Deleted!');
-        }
+        $product->delete();
         return $this->sendResponse(new ProductResource($product), "Product Deleted!");
         
     }
