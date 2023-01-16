@@ -47,4 +47,13 @@ class ProductController extends BaseController
         $product->update($request->all());
         return $this->sendResponse(new ProductResource($product), "Product Updated Successfully!"); 
     }
+    public function destroy(Product $product){
+        
+        if(is_null($product)){
+            $product->delete();
+            return $this->sendError('Product Already Deleted!');
+        }
+        return $this->sendResponse(new ProductResource($product), "Product Deleted!");
+        
+    }
 }
